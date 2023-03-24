@@ -27,5 +27,20 @@ namespace API.Controllers
             return Ok(data);
         }
 
+        [HttpPost]
+        [Route("api/[controller]/Insert/{id}")]
+        public ActionResult Insert(int id)
+        {
+            var data = new EnergyOccurence
+            {
+                Id = id,
+                Date = DateTime.Now,
+                Value = 100
+            };
+            _context.EnergyOccurences.Add(data);
+            _context.SaveChanges();
+            return Ok();
+        }
+
     }
 }
