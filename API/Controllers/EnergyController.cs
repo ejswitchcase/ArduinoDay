@@ -42,5 +42,20 @@ namespace API.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("api/[controller]/GetPrice")]
+        public IActionResult GetPrice()
+        {
+            List<EnergyOccurence> energyOccurences = _context.EnergyOccurences.ToList();
+            int totalOfEnergy = 0;
+            energyOccurences.ForEach(energyOccurence => totalOfEnergy += energyOccurence.Value);
+            int energyAsWatt = totalOfEnergy * 220;
+            int wattsAsKwh = energyAsWatt / 1000;
+            double EnergyTax = 0.7358;
+            double price = wattsAsKwh * EnergyTax;
+            return Ok(price);
+        }
+
+
     }
 }
