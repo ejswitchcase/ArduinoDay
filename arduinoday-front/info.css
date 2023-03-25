@@ -21,7 +21,8 @@ body{
 .titleInfo{
     display: inline; 
     font-size: 20px; 
-    color: #09427D; 
+    /* color: #09427D;  */
+    color: #fff; 
     text-align:center; 
     font-weight: bold;
     margin-top: 2%;
