@@ -37,7 +37,7 @@
             <main>
                 <!-- Chart -->
                 <div style="padding:20px">
-                    <canvas id="chart-line" height="150" width="200">
+                    <canvas id="chart-line" height="300" width="300">
 
                     </canvas>
                 </div>
@@ -61,6 +61,7 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                console.log(new Date(data[0].hour))
 
                 const labels = data.map(item => item.hour)
                 const graphicData = {
@@ -86,29 +87,29 @@
             })
             .catch(error => console.error(error));
 
-        monthNames = ["January", "February", "March", "April", "May", "June"]
+        // monthNames = ["January", "February", "March", "April", "May", "June"]
 
-        const labels = monthNames;
-        const graphicData = {
-            labels: labels,
-            datasets: [{
-                label: 'T/h',
-                data: [65, 59, 80, 81, 56, 55],
-                fill: false,
-                borderColor: 'rgb(0, 0, 255))',
-                tension: 0.1
-            }]
-        };
+        // const labels = monthNames;
+        // const graphicData = {
+        //     labels: labels,
+        //     datasets: [{
+        //         label: 'T/h',
+        //         data: [65, 59, 80, 81, 56, 55],
+        //         fill: false,
+        //         borderColor: 'rgb(0, 0, 255))',
+        //         tension: 0.1
+        //     }]
+        // };
 
-        const config = {
-            type: 'line',
-            data: graphicData,
-        };
+        // const config = {
+        //     type: 'line',
+        //     data: graphicData,
+        // };
 
-        new Chart(
-            document.getElementById('chart-line'),
-            config
-        );
+        // new Chart(
+        //     document.getElementById('chart-line'),
+        //     config
+        // );
 
 
 
