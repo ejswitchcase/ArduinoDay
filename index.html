@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GC</title>
+
+    <!-- Icone da aba -->
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/1522/1522150.png" type="image/x-icon" />
+
+    <link rel="stylesheet" href="info.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- <link href="bootstrap-icons.css" rel="stylesheet" /> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <div class="row" style="background-color: #09427D;">
+            <div class="col titleInfo ">Medição de Corrente</div>
+
+        </div>
+
+    </header>
+
+    <section class="col-lg-7 connectedSortable ui-sortable">
+        <dvi class="card">
+            <div style="padding: 10px"></div>
+            <h2>
+                Gráfico de corrente / Tempo
+            </h2>
+            <main>
+                <!-- Chart -->
+                <div style="padding:20px">
+                    <canvas id="chart-line" height="300" width="300">
+
+                    </canvas>
+                </div>
+                <div style="padding: 50px">
+                    <h3 class="text-center">
+                        Valor total do consumo :
+                        <h4 id="energyTotalValue" class="text-center">
+                            0
+                        </h4>
+                    </h3>
+                </div>
+
+
+        </dvi>
+
+    </section>
+
+
+    <script>
+
+        function parseDateString(dateString) {
+            const date = new Date(dateString);
+            const hour = date.getHours();
+            const minute = date.getMinutes();
+            const formattedHour = hour.toString().padStart(2, '0');
+            const formattedMinute = minute.toString().padStart(2, '0');
+            return `${formattedHour}:${formattedMinute}`;
+        }
+        fetch('https://arduinoday.pythonanywhere.com/getData')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                console.log(new Date(data[0].hour))
+
+                const labels = data.map(item => parseDateString(item.hour))
+                const graphicData = {
+                    labels: labels,
+                    datasets: [{
+                        label: 'T/h',
+                        data: data.map(item => item.current),
+                        fill: false,
+                        borderColor: 'rgb(0, 0, 255))',
+                        tension: 0.1
+                    }]
+                };
+
+                const config = {
+                    type: 'line',
+                    data: graphicData,
+                };
+
+                new Chart(
+                    document.getElementById('chart-line'),
+                    config
+                );
+
+                var amountOfcurrent = 0;
+                data.forEach(item => {
+                    amountOfcurrent += item.current;
+                });
+
+                amountOfcurrent = (amountOfcurrent * 220) / 1000
+                amountOfcurrent = amountOfcurrent * 0.7358; //Valor em kWh
+                // amountOfcurrent = amountOfcurrent * ;
+                document.getElementById('energyTotalValue').innerText = amountOfcurrent.toFixed(2) + " R$";
+            })
+            .catch(error => console.error(error));
+
+        // monthNames = ["January", "February", "March", "April", "May", "June"]
+
+        // const labels = monthNames;
+        // const graphicData = {
+        //     labels: labels,
+        //     datasets: [{
+        //         label: 'T/h',
+        //         data: [65, 59, 80, 81, 56, 55],
+        //         fill: false,
+        //         borderColor: 'rgb(0, 0, 255))',
+        //         tension: 0.1
+        //     }]
+        // };
+
+        // const config = {
+        //     type: 'line',
+        //     data: graphicData,
+        // };
+
+        // new Chart(
+        //     document.getElementById('chart-line'),
+        //     config
+        // );
+
+
+
+
+    </script>
+
+
+
+    <script>
+        function calcularSomatorio() {
+            // enviar uma solicitação ao servidor para buscar os valores do banco de dados
+            fetch('/buscar_valores_do_banco_de_dados')
+                .then(response => response.json()) // converter a resposta em formato JSON
+                .then(data => {
+                    // calcular o somatório dos valores recuperados
+                    let somatorio = 0;
+                    data.forEach(item => {
+                        somatorio += item.valor;
+                    });
+
+                    // exibir o somatório na página HTML
+                    document.getElementById('resultado').innerText = somatorio;
+                })
+                .catch(error => console.error(error));
+        }
+        // Importando o módulo mysql
+        const mysql = require('mysql');
+
+        // Configurando a conexão com o banco de dados
+        const connection = mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: 'aluno',
+            database: 'correntes'
+        });
+
+        // Conectando ao banco de dados
+        connection.connect();
+
+        // Query SQL para selecionar a coluna desejada e obter o somatório
+        const query = 'SELECT SUM(nome_da_coluna) AS total FROM nome_da_tabela';
+
+        // Executando a query
+        connection.query(query, function (error, results, fields) {
+            if (error) throw error;
+            console.log('O somatório da coluna é: ', results[0].total);
+        });
+
+        // Fechando a conexão com o banco de dados
+        connection.end();
+    </script>
+
+
+    </main>
+</body>
+
+</html>
