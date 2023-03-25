@@ -84,6 +84,15 @@
                     document.getElementById('chart-line'),
                     config
                 );
+
+                var amountOfcurrent = 0;
+                data.forEach(item => {
+                    amountOfcurrent += item.current;
+                });
+
+                amountOfcurrent = (amountOfcurrent * 220)/1000
+                amountOfcurrent = amountOfcurrent * 0.7358;
+                document.getElementById('energyTotalValue').innerText = amountOfcurrent.toFixed(2) + " R$";
             })
             .catch(error => console.error(error));
 
