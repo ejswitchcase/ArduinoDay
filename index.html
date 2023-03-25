@@ -100,8 +100,8 @@
                 });
 
                 amountOfcurrent = (amountOfcurrent * 220) / 1000
-                // amountOfcurrent = amountOfcurrent * 0.7358; //Valor em kWh
-                amountOfcurrent = amountOfcurrent * 2648.88; //Valor em kWs
+                amountOfcurrent = amountOfcurrent * 0.7358; //Valor em kWh
+                // amountOfcurrent = amountOfcurrent * ;
                 document.getElementById('energyTotalValue').innerText = amountOfcurrent.toFixed(2) + " R$";
             })
             .catch(error => console.error(error));
