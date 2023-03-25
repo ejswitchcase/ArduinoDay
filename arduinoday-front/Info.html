@@ -57,13 +57,22 @@
 
 
     <script>
+
+        function parseDateString(dateString) {
+            const date = new Date(dateString);
+            const hour = date.getHours();
+            const minute = date.getMinutes();
+            const formattedHour = hour.toString().padStart(2, '0');
+            const formattedMinute = minute.toString().padStart(2, '0');
+            return `${formattedHour}:${formattedMinute}`;
+        }
         fetch('https://arduinoday.pythonanywhere.com/getData')
             .then(response => response.json())
             .then(data => {
                 console.log(data);
                 console.log(new Date(data[0].hour))
 
-                const labels = data.map(item => item.hour)
+                const labels = data.map(item => parseDateString(item.hour))
                 const graphicData = {
                     labels: labels,
                     datasets: [{
@@ -90,7 +99,7 @@
                     amountOfcurrent += item.current;
                 });
 
-                amountOfcurrent = (amountOfcurrent * 220)/1000
+                amountOfcurrent = (amountOfcurrent * 220) / 1000
                 amountOfcurrent = amountOfcurrent * 0.7358;
                 document.getElementById('energyTotalValue').innerText = amountOfcurrent.toFixed(2) + " R$";
             })
