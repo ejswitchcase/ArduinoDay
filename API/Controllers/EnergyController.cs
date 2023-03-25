@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Context;
+using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -31,11 +32,11 @@ namespace API.Controllers
         [Route("api/[controller]/Insert/{id}")]
         public ActionResult Insert(int id)
         {
-            var data = new EnergyOccurence
+            var data = new EnergyOccurrenc
             {
                 Id = id,
-                Date = DateTime.Now,
-                Value = 100
+                EnergyValue = id,
+                Created_at = DateTime.Now,
             };
             _context.EnergyOccurences.Add(data);
             _context.SaveChanges();
@@ -46,9 +47,9 @@ namespace API.Controllers
         [Route("api/[controller]/GetPrice")]
         public IActionResult GetPrice()
         {
-            List<EnergyOccurence> energyOccurences = _context.EnergyOccurences.ToList();
+            List<EnergyOccurrenc> energyOccurences = _context.EnergyOccurences.ToList();
             int totalOfEnergy = 0;
-            energyOccurences.ForEach(energyOccurence => totalOfEnergy += energyOccurence.Value);
+            energyOccurences.ForEach(energyOccurence => totalOfEnergy += energyOccurence.EnergyValue);
             int energyAsWatt = totalOfEnergy * 220;
             int wattsAsKwh = energyAsWatt / 1000;
             double EnergyTax = 0.7358;
