@@ -154,7 +154,7 @@
 
                 amountOfcurrent = (amountOfcurrent * 220) / 1000
                 amountOfcurrent = amountOfcurrent * 0.7358;
-                document.getElementById('energyTotalValue').innerText = amountOfcurrent.toFixed(2) + " R$";
+                document.getElementById('energyTotalValue').innerText = "R$ " + amountOfcurrent.toFixed(2);
             })
             .catch(error => console.error(error));
 
