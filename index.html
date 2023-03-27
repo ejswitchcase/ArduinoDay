@@ -36,7 +36,6 @@
 
     </header>
     <div class="row">
-        <!-- <label style="padding: 20px; ">Selecione um periodo:</label> -->
         <div style="padding: 20px; font-weight: bold;">Selecione um periodo:</div>
         <div id="reportrange" style="padding: 5px"
             style="background: #09427D; cursor: pointer; padding: 5px 10px; border: 1px solid #352a2a; width: 100%">
@@ -47,30 +46,27 @@
 
 
     <section class="col-lg-7 connectedSortable ui-sortable">
-        <dvi class="card">
-            <div style="padding: 10px"></div>
-            <h2 style="margin-left: auto; margin-right: auto;">
-                Gráfico de corrente / Tempo
-            </h2>
-            <main>
-                <!-- Chart -->
-                <div style="padding:20px">
-                    <canvas id="chart-line" height="300" width="300">
-
-                    </canvas>
+        <main>
+            <!-- Chart -->
+            <div style="padding:20px">
+                <div class="card bg-light mb-3">
+                    <div class="card-header">
+                        Gráfico de corrente / Tempo
+                    </div>
+                    <div class="card-body">
+                        <canvas id="chart-line" height="300" width="300"></canvas>
+                    </div>
                 </div>
-                <div style="padding: 50px">
-                    <h3 class="text-center">
-                        <!-- Valor total do consumo: -->
-                        Se você mantiver o mesmo padrão de consumo, em uma hora, o valor total do seu consumo será de:
-                        <h4 id="energyTotalValue" class="text-center">
-                            0
-                        </h4>
-                    </h3>
-                </div>
-
-
-        </dvi>
+            </div>
+            <div style="padding: 50px">
+                <h3 class="text-center">
+                    <!-- Valor total do consumo: -->
+                    Se você mantiver o mesmo padrão de consumo, em uma hora, o valor total do seu consumo será de:
+                    <h4 id="energyTotalValue" class="text-center">
+                        0
+                    </h4>
+                </h3>
+            </div>
 
     </section>
 
